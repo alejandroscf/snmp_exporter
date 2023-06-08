@@ -45,6 +45,7 @@ WIENER_URL        := https://file.wiener-d.com/software/net-snmp/WIENER-CRATE-MI
 RARITAN_URL       := https://cdn.raritan.com/download/PX/v1.5.20/PDU-MIB.txt
 INFRAPOWER_URL    := https://www.austin-hughes.com/wp-content/uploads/2021/05/IPD-03-S-MIB.zip
 LIEBERT_URL       := https://www.vertiv.com/globalassets/documents/software/monitoring/lgpmib-win_rev16_299461_0.zip
+GENEREX_URL       := https://www.generex.de/packages/resources/mib/RFC1628-cs1x1.mib
 
 CYBERPOWER_VERSION := 2.10
 CYBERPOWER_URL     := https://dl4jz3rbrsfum.cloudfront.net/software/CyberPower_MIB_v$(CYBERPOWER_VERSION).MIB.zip
@@ -124,7 +125,8 @@ mibs: \
   $(MIBDIR)/PDU-MIB.txt \
   $(MIBDIR)/Infrapower-MIB.mib \
   $(MIBDIR)/LIEBERT_GP_PDU.MIB \
-  $(MIBDIR)/CyberPower.MIB
+  $(MIBDIR)/CyberPower.MIB \
+  $(MIBDIR)/RFC1628-cs1x1.mib
 
 $(MIBDIR)/apc-powernet-mib:
 	@echo ">> Downloading apc-powernet-mib"
@@ -320,3 +322,7 @@ $(MIBDIR)/CyberPower.MIB:
 	@sed -i.bak -E 's/(DisplayString[[:space:]]*FROM )RFC1213-MIB/\1SNMPv2-TC/' $@
 	@rm $@.bak
 	@rm -v $(TMP)
+
+$(MIBDIR)/RFC1628-cs1x1.mib:
+	@echo ">> Downloading RFC1628-cs1x1.mib"
+	@curl $(CURL_OPTS) -o $(MIBDIR)/RFC1628-cs1x1.mib $(GENEREX_URL)
